@@ -1,17 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.css';
+
+const defaultState = {
+  todos: [],
+}
+
+const reduser = (state = defaultState, action) => {
+  switch(action.type){
+    case 'ADD_TODO':
+      return {...state, todos: state.todos.concat([action.newItem])}
+    case 'DELETE_TODO':
+      return {...state, todos: state.todos.filter((todo) => todo.id !== action.id)}
+    case 'EDIT_TODO':
+      return {...state, todos: state.todos.map((todo) => {
+        if(todo.id === action.id){
+          return {...todo, task: action.payload}
+        }else{
+          return {...todo}
+        }
+      })}
+    default:
+      return state
+  }
+}
+
+const store = createStore(reduser)
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
