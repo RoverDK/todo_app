@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@material-ui/core";
-import { Delete, Edit, Save } from "@material-ui/icons";
+import { Delete, Edit, Save, Close } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -37,7 +37,14 @@ function ToDo({todo}) {
                 </Box>
             }
             <Box>
-                <Button onClick={() => setEdit(!edit)}><Edit fontSize='large'/></Button>
+                <Button onClick={() => setEdit(!edit)}>
+                    {edit &&
+                        <Close fontSize='large'/>
+                    }
+                    {!edit &&
+                        <Edit fontSize='large'/>
+                    }
+                </Button>
                 <Button onClick={() => deleteTodo()}><Delete fontSize='large'/></Button>
             </Box>
       </div>
