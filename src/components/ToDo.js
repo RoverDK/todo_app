@@ -9,7 +9,7 @@ function ToDo({todo}) {
     const [editText, setEditText] = useState('')
     const [taskError, setTaskError] = useState(false)
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
     
     const saveEdit = () => {
         if(!editText){
